@@ -1,14 +1,28 @@
+// selecting canvas parent to append div children based on input
 const canvas = document.querySelector(".canvas")
 
 let input = 16;
 
-for(let i =0;i<input * input; i++){
-    let gridDiv=document.createElement("div")
-    canvas.appendChild(gridDiv)
-    gridDiv.classList.add("grid-border")
-    gridDiv.id = `canvas-grid-${i}`
-    
+let canvasGridCounter = 0
+// creating the amount of divs needed for canvas based on input
+for(let i =0;i<input; i++){
+    // let gridDiv=document.createElement("div")
+    // canvas.appendChild(gridDiv)
+    // gridDiv.classList.add("grid-border")
+    // gridDiv.id = `canvas-grid-${i}`
+    for(let j = 0; j<input; j++){
+        let gridDiv=document.createElement("div")
+        gridDiv.style.width=`${1000 / input}px`;
+        gridDiv.style.height=`${1000 / input}px`;
+        gridDiv.classList.add("grid-border")
+        gridDiv.id = `canvas-grid-${canvasGridCounter}`
+        canvas.appendChild(gridDiv)
+        canvasGridCounter++
+    }
 }
+
+
+// Selecting every canvas grid. Adding hover event listener to each canvas grid item to turn black on hover
 
 function changeColor(e){
     let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
