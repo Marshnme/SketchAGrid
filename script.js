@@ -12,8 +12,8 @@ for(let i =0;i<input; i++){
     // gridDiv.id = `canvas-grid-${i}`
     for(let j = 0; j<input; j++){
         let gridDiv=document.createElement("div")
-        gridDiv.style.width=`${1000 / input}px`;
-        gridDiv.style.height=`${1000 / input}px`;
+        // gridDiv.style.width=`${50 / input}%`;
+        // gridDiv.style.height=`${50 / input}%`;
         gridDiv.classList.add("grid-border")
         gridDiv.id = `canvas-grid-${canvasGridCounter}`
         canvas.appendChild(gridDiv)
@@ -33,3 +33,15 @@ let canvasDivs = document.querySelectorAll(".grid-border");
 canvasDivs.forEach(div=>{
     div.addEventListener("mouseover",changeColor)
 })
+
+
+
+// Clear button functionality
+let clearButton = document.querySelector(".clear-button")
+clearButton.addEventListener("mousedown",clearBoard)
+
+function clearBoard(){
+    canvasDivs.forEach(div=>{
+        div.style.backgroundColor = "white";
+    })
+}

@@ -21,11 +21,11 @@ html,body{
     margin-top:2%;
     display:flex;
     flex-flow:row wrap;
-    width:1000px;
-    height:1000px;
+    width:50%;
+    height:50%;
     border:1px solid black;
 }
 .grid-border{
-    /* width:5%; */
+    width:5%;
     border:1px solid black;
 }
