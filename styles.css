@@ -20,12 +20,19 @@ html,body{
 .canvas{
     margin-top:2%;
     display:flex;
-    flex-flow:row wrap;
-    width:50%;
-    height:50%;
+    flex-flow:row nowrap;
+    width:500px;
+    height:500px; 
     border:1px solid black;
 }
+
+.canvas-row{
+    display:flex;
+    flex-flow: column nowrap;
+}
 .grid-border{
-    width:5%;
+    /* width:10px;
+    height: */
+    
     border:1px solid black;
 }
