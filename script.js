@@ -1,6 +1,7 @@
 // selecting canvas parent to append div children based on input
 const canvas = document.querySelector(".canvas")
 let canvasSize = document.querySelector(".canvas-size-input")
+
 console.log(canvasSize)
 let input = 100;
 
