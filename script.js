@@ -2,11 +2,10 @@
 const canvas = document.querySelector(".canvas")
 let canvasSize = document.querySelector(".canvas-size-input")
 
-console.log(canvasSize)
-let input = 100;
+let input = 16;
 
 let canvasGridCounter = 0
-// creating the amount of divs needed for canvas based on input
+// creating the amount of rows and divs needed for canvas based on input
 for(let i = 0;i<input; i++){
     let gridRow=document.createElement("div")
     gridRow.classList.add("canvas-row")
@@ -24,7 +23,7 @@ for(let i = 0;i<input; i++){
 
 
 
-// Selecting every canvas grid. Adding mouse click into hover event listener to each canvas grid item to turn black on click and drag. Listening to window mouseup to remove hover event
+// Selecting every canvas grid. Adding mouse click event into hover event listener to each canvas grid item to turn black on click and drag. Listening to window mouseup to remove hover event
 let canvasDivs = document.querySelectorAll(".grid-border");
 canvasDivs.forEach(div=>{
     div.addEventListener("mousedown",changeColor)
@@ -34,10 +33,9 @@ canvasDivs.forEach(div=>{
 function changeColor(e){
     e.preventDefault();
 
-        canvasDivs.forEach(div=>{
-            div.addEventListener("mouseover",changeColor)
-        })
-    
+    canvasDivs.forEach(div=>{
+        div.addEventListener("mouseover",changeColor)
+    })
     
     let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
     currentCanvasDiv.style.backgroundColor="black"
