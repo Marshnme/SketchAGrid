@@ -1,7 +1,7 @@
 // selecting canvas parent to append div children based on input
 const canvas = document.querySelector(".canvas")
 
-let input = 16;
+let input = 100;
 
 let canvasGridCounter = 0
 // creating the amount of divs needed for canvas based on input
@@ -9,8 +9,6 @@ for(let i = 0;i<input; i++){
     let gridRow=document.createElement("div")
     gridRow.classList.add("canvas-row")
     canvas.appendChild(gridRow)
-    // gridRow.classList.add("grid-border")
-    // gridDiv.id = `canvas-grid-${i}`
     for(let j = 0; j<input; j++){
         let gridDiv=document.createElement("div")
         gridDiv.style.width=`${500 / input}px`;
@@ -23,17 +21,31 @@ for(let i = 0;i<input; i++){
 }
 
 
-// Selecting every canvas grid. Adding hover event listener to each canvas grid item to turn black on hover
+
+// Selecting every canvas grid. Adding mouse click into hover event listener to each canvas grid item to turn black on click and drag. Listening to window mouseup to remove hover event
+let canvasDivs = document.querySelectorAll(".grid-border");
+canvasDivs.forEach(div=>{
+    div.addEventListener("mousedown",changeColor)
+})
+
 
 function changeColor(e){
+    e.preventDefault();
+
+        canvasDivs.forEach(div=>{
+            div.addEventListener("mouseover",changeColor)
+        })
+    
+    
     let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
     currentCanvasDiv.style.backgroundColor="black"
 }
 
-let canvasDivs = document.querySelectorAll(".grid-border");
-canvasDivs.forEach(div=>{
-    div.addEventListener("mouseover",changeColor)
-})
+window.addEventListener('mouseup', function(e){
+    canvasDivs.forEach(div=>{
+        div.removeEventListener("mouseover",changeColor)
+    })
+    })
 
 
 

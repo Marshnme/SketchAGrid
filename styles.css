@@ -20,7 +20,7 @@ html,body{
 .canvas{
     margin-top:2%;
     display:flex;
-    flex-flow:row nowrap;
+    flex-flow:column nowrap;
     width:500px;
     height:500px; 
     border:1px solid black;
@@ -28,11 +28,10 @@ html,body{
 
 .canvas-row{
     display:flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
 }
+
+/* grid on canvas tiles makes tiles overwrap container. I will fix this eventually */
 .grid-border{
-    /* width:10px;
-    height: */
-    
-    border:1px solid black;
+    /* border: 1px solid black; */
 }
