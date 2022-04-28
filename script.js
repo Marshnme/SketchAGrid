@@ -1,18 +1,7 @@
 // selecting canvas parent to append div children based on input
 const canvasContainer = document.querySelector(".canvas")
 
-let slider = document.getElementById("myRange");
-let inputDisplay = document.querySelector(".current-size")
-inputDisplay.innerHTML = slider.value;
-slider.oninput = function() {
-    inputDisplay.innerHTML = this.value;
-}
-
-slider.addEventListener("mouseup", remake)
-
-
-
-// creating the amount of rows and divs needed for canvas based on input
+// creating the amount of rows and divs needed for canvas based on input and applying event listeners to current canvas
 function canvas(input){
     let canvasGridCounter = 0
     for(let i = 0;i<input; i++){
@@ -33,8 +22,19 @@ function canvas(input){
     clearBoard()
 }
 
-canvas(parseInt(slider.value))
 
+// grabbing slider and updating slider output when slider input is changed
+
+let slider = document.getElementById("myRange");
+let inputDisplay = document.querySelector(".current-size")
+inputDisplay.innerHTML = slider.value;
+slider.oninput = function() {
+    inputDisplay.innerHTML = this.value;
+}
+// triggering canvas remake when mouse releases on the slider
+slider.addEventListener("mouseup", remake)
+
+// removing old canvas and recreating with new slider input
 function remake(e){
     document.querySelectorAll(".canvas-row").forEach(e => e.remove());
     canvas(parseInt(slider.value))
@@ -79,3 +79,6 @@ function clearBoard(){
         div.style.backgroundColor = "white";
     })
 }
+
+// creating default canvas with the sliders default value
+canvas(parseInt(slider.value))
