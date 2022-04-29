@@ -44,10 +44,14 @@ html,body{
 
 /* grid on canvas tiles makes tiles overwrap container. I will fix this eventually */
 .grid-border{
-    /* border: 1px solid black; */
+    
 }
 
 .canvas-options{
     margin-top:1%;
     /* height: 0px; */
 }
+
+/* .darken-div:active{
+    filter: brightness(0);
+} */

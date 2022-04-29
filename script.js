@@ -71,7 +71,7 @@ function clickAndDrag(){
         })
     
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
-        currentCanvasDiv.style.backgroundColor="black";
+        currentCanvasDiv.style.backgroundColor=`rgb(0,0,0)`;
  }
 
 
@@ -124,20 +124,21 @@ function darkenClickAndDrag(){
         window.addEventListener('mouseup', function(e){
             canvasDivs.forEach(div=>{
                 div.removeEventListener("mouseover",darkenColor)
-                // div.removeEventListener("mousedown",darkenColor)
             })
         })
     }
 
     function darkenColor(e){
-        let canvasDivs = document.querySelectorAll(".grid-border");
         e.preventDefault()
+        let canvasDivs = document.querySelectorAll(".grid-border");
+        
         canvasDivs.forEach(div=>{
             div.addEventListener("mouseover",darkenColor);
         })
 
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
-        currentCanvasDiv.style.backgroundColor = `rgb(${100},${100},${100})`
+        console.log(currentCanvasDiv.style.backgroundColor.split(","))
+        // currentCanvasDiv.classList.add('darken-div')
  }
 
 
