@@ -12,7 +12,7 @@ html,body{
     height:100%;
 }
 .canvas-size{
-    margin-top:3%;
+    margin-top:2%;
     display:flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -47,6 +47,9 @@ html,body{
     /* border: 1px solid black; */
 }
 
+.canvas-options{
+    margin-top:-50px;
+}
 
 .clear-button{
     margin-top:30%;

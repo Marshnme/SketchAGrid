@@ -70,9 +70,10 @@ function clickAndDrag(){
 
 }
 
-// RGB picker
+// RGB click and drag
 let rgbButton = document.querySelector(".random-rgb");
 rgbButton.addEventListener("mousedown",rgbClickAndDrag);
+
 function rgbClickAndDrag(){
 
     let canvasDivs = document.querySelectorAll(".grid-border");
@@ -80,10 +81,10 @@ function rgbClickAndDrag(){
             div.addEventListener("mousedown",randomRgb)
         })
     function randomRgb(e){
-        let red = Math.floor(Math.random() * 255);
-        let blue = Math.floor(Math.random() * 255);
-        let green = Math.floor(Math.random() * 255);
-
+        let red = Math.floor(Math.random() * 255 + 1);
+        let blue = Math.floor(Math.random() * 255 + 1);
+        let green = Math.floor(Math.random() * 255 + 1);
+        
         canvasDivs.forEach(div=>{
             div.addEventListener("mouseover",randomRgb)
         })
