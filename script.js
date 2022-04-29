@@ -40,19 +40,25 @@ function remake(e){
     canvas(parseInt(slider.value))
 }
 
+
+// Selecting every canvas grid. Adding mouse click event into hover event listener to each canvas grid item to turn black on click and drag. Listening to window mouseup to remove hover event
 let colorBlack = document.querySelector(".color-black");
 colorBlack.addEventListener("mousedown", clickAndDrag);
 
-// Selecting every canvas grid. Adding mouse click event into hover event listener to each canvas grid item to turn black on click and drag. Listening to window mouseup to remove hover event
 function clickAndDrag(){
     let canvasDivs = document.querySelectorAll(".grid-border");
-    canvasDivs.forEach(div=>{
-        div.addEventListener("mousedown",changeColor)
-    })
 
+    canvasDivs.forEach(div=>{
+        div.removeEventListener("mousedown", darkenColor)
+        div.removeEventListener("mousedown", randomRgb)
+        div.addEventListener("mousedown",changeColor)
+        
+    })
+}    
 
     function changeColor(e){
         e.preventDefault();
+        let canvasDivs = document.querySelectorAll(".grid-border");
 
         canvasDivs.forEach(div=>{
          div.addEventListener("mouseover",changeColor)
@@ -60,27 +66,34 @@ function clickAndDrag(){
     
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
         currentCanvasDiv.style.backgroundColor="black";
-    }
+   
 
     window.addEventListener('mouseup', function(e){
         canvasDivs.forEach(div=>{
             div.removeEventListener("mouseover",changeColor)
+            // div.removeEventListener("mousedown",changeColor)
         })
     })
+ }
 
-}
 
 // RGB click and drag
 let rgbButton = document.querySelector(".random-rgb");
 rgbButton.addEventListener("mousedown",rgbClickAndDrag);
 
 function rgbClickAndDrag(){
-
     let canvasDivs = document.querySelectorAll(".grid-border");
-        canvasDivs.forEach(div=>{
-            div.addEventListener("mousedown",randomRgb)
-        })
+    canvasDivs.forEach(div=>{
+        div.removeEventListener("mousedown", darkenColor)
+        div.removeEventListener("mousedown",changeColor)
+        div.addEventListener("mousedown",randomRgb)
+    })
+}
+
     function randomRgb(e){
+        e.preventDefault()
+        let canvasDivs = document.querySelectorAll(".grid-border");
+
         let red = Math.floor(Math.random() * 255 + 1);
         let blue = Math.floor(Math.random() * 255 + 1);
         let green = Math.floor(Math.random() * 255 + 1);
@@ -91,13 +104,47 @@ function rgbClickAndDrag(){
 
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
         currentCanvasDiv.style.backgroundColor = `rgb(${red},${blue},${green})`
+
+        window.addEventListener('mouseup', function(e){
+            canvasDivs.forEach(div=>{
+                div.removeEventListener("mouseover",randomRgb)
+            })
+        })
     }
+
+
+// Darkens current color on each pass until black
+let darken = document.querySelector(".darken");
+darken.addEventListener("mousedown", darkenClickAndDrag)
+
+function darkenClickAndDrag(){
+    let canvasDivs = document.querySelectorAll(".grid-border");
+        canvasDivs.forEach(div=>{
+            div.removeEventListener("mousedown", changeColor)
+            div.removeEventListener("mousedown", randomRgb)
+            div.addEventListener("mousedown",darkenColor)
+        })
+    }
+
+    function darkenColor(e){
+        let canvasDivs = document.querySelectorAll(".grid-border");
+        e.preventDefault()
+        canvasDivs.forEach(div=>{
+            div.addEventListener("mouseover",darkenColor);
+        })
+
+        let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
+        currentCanvasDiv.style.backgroundColor = `rgb(${100},${100},${100})`
+   
+
     window.addEventListener('mouseup', function(e){
         canvasDivs.forEach(div=>{
-            div.removeEventListener("mouseover",randomRgb)
+            div.removeEventListener("mouseover",darkenColor)
+            // div.removeEventListener("mousedown",darkenColor)
         })
     })
-}
+ }
+
 
 // Clear button functionality
 let clearButton = document.querySelector(".clear-button")
@@ -109,6 +156,7 @@ function clearBoard(){
         div.style.backgroundColor = "white";
     })
 }
+
 
 // creating default canvas with the sliders default value
 canvas(parseInt(slider.value))
