@@ -40,6 +40,8 @@ function remake(e){
     canvas(parseInt(slider.value))
 }
 
+let colorBlack = document.querySelector(".color-black");
+colorBlack.addEventListener("mousedown", clickAndDrag);
 
 // Selecting every canvas grid. Adding mouse click event into hover event listener to each canvas grid item to turn black on click and drag. Listening to window mouseup to remove hover event
 function clickAndDrag(){
@@ -68,6 +70,33 @@ function clickAndDrag(){
 
 }
 
+// RGB picker
+let rgbButton = document.querySelector(".random-rgb");
+rgbButton.addEventListener("mousedown",rgbClickAndDrag);
+function rgbClickAndDrag(){
+
+    let canvasDivs = document.querySelectorAll(".grid-border");
+        canvasDivs.forEach(div=>{
+            div.addEventListener("mousedown",randomRgb)
+        })
+    function randomRgb(e){
+        let red = Math.floor(Math.random() * 255);
+        let blue = Math.floor(Math.random() * 255);
+        let green = Math.floor(Math.random() * 255);
+
+        canvasDivs.forEach(div=>{
+            div.addEventListener("mouseover",randomRgb)
+        })
+
+        let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
+        currentCanvasDiv.style.backgroundColor = `rgb(${red},${blue},${green})`
+    }
+    window.addEventListener('mouseup', function(e){
+        canvasDivs.forEach(div=>{
+            div.removeEventListener("mouseover",randomRgb)
+        })
+    })
+}
 
 // Clear button functionality
 let clearButton = document.querySelector(".clear-button")
