@@ -13,16 +13,23 @@ html,body{
 }
 .canvas-size{
     margin-top:3%;
+    display:flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.current-size{
+    margin-bottom:0;
 }
 .slider{
     opacity: 0.7;
 }
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+.slider:hover{
+    opacity: 1;
   }
 
 .canvas{
-    margin-top:2%;
+    margin-top:1%;
     display:flex;
     flex-flow:column nowrap;
     width:500px;
@@ -38,4 +45,9 @@ html,body{
 /* grid on canvas tiles makes tiles overwrap container. I will fix this eventually */
 .grid-border{
     /* border: 1px solid black; */
+}
+
+
+.clear-button{
+    margin-top:30%;
 }

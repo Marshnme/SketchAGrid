@@ -27,9 +27,9 @@ function canvas(input){
 
 let slider = document.getElementById("myRange");
 let inputDisplay = document.querySelector(".current-size")
-inputDisplay.innerHTML = slider.value;
+inputDisplay.innerHTML = `${slider.value} x ${slider.value}`;
 slider.oninput = function() {
-    inputDisplay.innerHTML = this.value;
+    inputDisplay.innerHTML = `${this.value} x ${this.value}`;
 }
 // triggering canvas remake when mouse releases on the slider
 slider.addEventListener("mouseup", remake)
