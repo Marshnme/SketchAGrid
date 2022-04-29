@@ -27,6 +27,7 @@ function canvas(input){
 
 let slider = document.getElementById("myRange");
 let inputDisplay = document.querySelector(".current-size")
+
 inputDisplay.innerHTML = `${slider.value} x ${slider.value}`;
 slider.oninput = function() {
     inputDisplay.innerHTML = `${this.value} x ${this.value}`;
@@ -54,6 +55,11 @@ function clickAndDrag(){
         div.addEventListener("mousedown",changeColor)
         
     })
+    window.addEventListener('mouseup', function(e){
+        canvasDivs.forEach(div=>{
+            div.removeEventListener("mouseover",changeColor)
+        })
+    })
 }    
 
     function changeColor(e){
@@ -66,14 +72,6 @@ function clickAndDrag(){
     
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
         currentCanvasDiv.style.backgroundColor="black";
-   
-
-    window.addEventListener('mouseup', function(e){
-        canvasDivs.forEach(div=>{
-            div.removeEventListener("mouseover",changeColor)
-            // div.removeEventListener("mousedown",changeColor)
-        })
-    })
  }
 
 
@@ -87,6 +85,11 @@ function rgbClickAndDrag(){
         div.removeEventListener("mousedown", darkenColor)
         div.removeEventListener("mousedown",changeColor)
         div.addEventListener("mousedown",randomRgb)
+    })
+    window.addEventListener('mouseup', function(e){
+        canvasDivs.forEach(div=>{
+            div.removeEventListener("mouseover",randomRgb)
+        })
     })
 }
 
@@ -104,12 +107,6 @@ function rgbClickAndDrag(){
 
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
         currentCanvasDiv.style.backgroundColor = `rgb(${red},${blue},${green})`
-
-        window.addEventListener('mouseup', function(e){
-            canvasDivs.forEach(div=>{
-                div.removeEventListener("mouseover",randomRgb)
-            })
-        })
     }
 
 
@@ -124,6 +121,12 @@ function darkenClickAndDrag(){
             div.removeEventListener("mousedown", randomRgb)
             div.addEventListener("mousedown",darkenColor)
         })
+        window.addEventListener('mouseup', function(e){
+            canvasDivs.forEach(div=>{
+                div.removeEventListener("mouseover",darkenColor)
+                // div.removeEventListener("mousedown",darkenColor)
+            })
+        })
     }
 
     function darkenColor(e){
@@ -135,14 +138,6 @@ function darkenClickAndDrag(){
 
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
         currentCanvasDiv.style.backgroundColor = `rgb(${100},${100},${100})`
-   
-
-    window.addEventListener('mouseup', function(e){
-        canvasDivs.forEach(div=>{
-            div.removeEventListener("mouseover",darkenColor)
-            // div.removeEventListener("mousedown",darkenColor)
-        })
-    })
  }
 
 
