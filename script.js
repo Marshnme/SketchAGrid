@@ -53,6 +53,7 @@ function clickAndDrag(){
         div.removeEventListener("mousedown", darkenColor)
         div.removeEventListener("mousedown", randomRgb)
         div.removeEventListener("mousedown", lightenColor)
+        div.removeEventListener("mousedown", eraseColor)
         div.addEventListener("mousedown",changeColor)
         
     })
@@ -86,6 +87,7 @@ function rgbClickAndDrag(){
         div.removeEventListener("mousedown", darkenColor)
         div.removeEventListener("mousedown",changeColor)
         div.removeEventListener("mousedown", lightenColor)
+        div.removeEventListener("mousedown", eraseColor)
         div.addEventListener("mousedown",randomRgb)
     })
     window.addEventListener('mouseup', function(e){
@@ -151,6 +153,7 @@ function darkenClickAndDrag(){
             div.removeEventListener("mousedown", changeColor)
             div.removeEventListener("mousedown", randomRgb)
             div.removeEventListener("mousedown", lightenColor)
+            div.removeEventListener("mousedown", eraseColor)
             div.addEventListener("mousedown",darkenColor)
         })
         window.addEventListener('mouseup', function(e){
@@ -195,6 +198,7 @@ function lightenClickAndDrag(){
         div.removeEventListener("mousedown",changeColor)
         div.removeEventListener("mousedown",randomRgb)
         div.removeEventListener("mousedown", darkenColor)
+        div.removeEventListener("mousedown", eraseColor)
         div.addEventListener("mousedown",lightenColor)
     })
     window.addEventListener('mouseup', function(e){
@@ -226,6 +230,38 @@ function lightenColor(e){
         
         currentCanvasDiv.style.backgroundColor = colorLuminance(hex,0.25);
 
+}
+
+// eraser functionality 
+let eraserButton = document.querySelector(".eraser")
+eraserButton.addEventListener("mousedown",eraserClickAndDrag)
+function eraserClickAndDrag(){
+    let canvasDivs = document.querySelectorAll(".grid-border");
+    canvasDivs.forEach(div=>{
+        div.removeEventListener("mousedown",changeColor)
+        div.removeEventListener("mousedown",randomRgb)
+        div.removeEventListener("mousedown", darkenColor)
+        div.removeEventListener("mousedown", lightenColor)
+        div.addEventListener("mousedown",eraseColor)
+    })
+    window.addEventListener('mouseup', function(e){
+        canvasDivs.forEach(div=>{
+            div.removeEventListener("mouseover",eraseColor)
+        })
+    })
+}
+
+function eraseColor(e){
+    e.preventDefault()
+
+    let canvasDivs = document.querySelectorAll(".grid-border");
+    canvasDivs.forEach(div=>{
+        div.addEventListener('mouseover',eraseColor);
+    })
+
+    let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
+
+    currentCanvasDiv.style.backgroundColor = "white"
 }
 
 
