@@ -128,6 +128,32 @@ function darkenClickAndDrag(){
         })
     }
 
+    // converts rgb to hex value
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    //   function to lighten or darken colors based on lum input
+    function colorLuminance(hex, lum) {
+
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+    
+        // convert to decimal and change luminosity
+        var rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i*2,2), 16);
+            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+            rgb += ("00"+c).substr(c.length);
+        }
+    
+        return rgb;
+    }
+
     function darkenColor(e){
         e.preventDefault()
         let canvasDivs = document.querySelectorAll(".grid-border");
@@ -137,8 +163,18 @@ function darkenClickAndDrag(){
         })
 
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
-        console.log(currentCanvasDiv.style.backgroundColor)
-        // currentCanvasDiv.classList.add('darken-div')
+    
+        rgb = currentCanvasDiv.style.backgroundColor;
+        // takes the rgb values out of string into array
+        rgb = rgb.replace(/[^\d,]/g, '').split(',');
+        
+        let red = parseInt(rgb[0])
+        let green = parseInt(rgb[1])
+        let blue = parseInt(rgb[2])
+        let hex = rgbToHex(red,green,blue)
+
+        
+        currentCanvasDiv.style.backgroundColor = colorLuminance(hex,-0.1);
  }
 
 
