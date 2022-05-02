@@ -224,7 +224,7 @@ function lightenColor(e){
         let hex = rgbToHex(red,green,blue)
 
         
-        currentCanvasDiv.style.backgroundColor = colorLuminance(hex,0.1);
+        currentCanvasDiv.style.backgroundColor = colorLuminance(hex,0.25);
 
 }
 
