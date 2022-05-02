@@ -137,7 +137,7 @@ function darkenClickAndDrag(){
         })
 
         let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
-        console.log(currentCanvasDiv.style.backgroundColor.split(","))
+        console.log(currentCanvasDiv.style.backgroundColor)
         // currentCanvasDiv.classList.add('darken-div')
  }
 
@@ -149,7 +149,7 @@ clearButton.addEventListener("mousedown",clearBoard)
 function clearBoard(){
     let canvasDivs = document.querySelectorAll(".grid-border");
     canvasDivs.forEach(div=>{
-        div.style.backgroundColor = "white";
+        div.style.backgroundColor = "rgb(255,255,255)";
     })
 }
 
