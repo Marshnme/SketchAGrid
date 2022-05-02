@@ -52,6 +52,7 @@ function clickAndDrag(){
     canvasDivs.forEach(div=>{
         div.removeEventListener("mousedown", darkenColor)
         div.removeEventListener("mousedown", randomRgb)
+        div.removeEventListener("mousedown", lightenColor)
         div.addEventListener("mousedown",changeColor)
         
     })
@@ -84,6 +85,7 @@ function rgbClickAndDrag(){
     canvasDivs.forEach(div=>{
         div.removeEventListener("mousedown", darkenColor)
         div.removeEventListener("mousedown",changeColor)
+        div.removeEventListener("mousedown", lightenColor)
         div.addEventListener("mousedown",randomRgb)
     })
     window.addEventListener('mouseup', function(e){
@@ -110,7 +112,36 @@ function rgbClickAndDrag(){
     }
 
 
-// Darkens current color on each pass until black
+// LOGIC FOR DARKEN AND LIGHTENING COLORS
+
+// converts rgb to hex value
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+//   function to lighten or darken colors based on lum input
+function colorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+        c = parseInt(hex.substr(i*2,2), 16);
+        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+        rgb += ("00"+c).substr(c.length);
+    }
+
+    return rgb;
+}
+
+
+// darkens color on mouse click and hover
 let darken = document.querySelector(".darken");
 darken.addEventListener("mousedown", darkenClickAndDrag)
 
@@ -119,6 +150,7 @@ function darkenClickAndDrag(){
         canvasDivs.forEach(div=>{
             div.removeEventListener("mousedown", changeColor)
             div.removeEventListener("mousedown", randomRgb)
+            div.removeEventListener("mousedown", lightenColor)
             div.addEventListener("mousedown",darkenColor)
         })
         window.addEventListener('mouseup', function(e){
@@ -128,41 +160,59 @@ function darkenClickAndDrag(){
         })
     }
 
-    // converts rgb to hex value
-    function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-    }
-
-    //   function to lighten or darken colors based on lum input
-    function colorLuminance(hex, lum) {
-
-        // validate hex string
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
-        if (hex.length < 6) {
-            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-        }
-        lum = lum || 0;
     
-        // convert to decimal and change luminosity
-        var rgb = "#", c, i;
-        for (i = 0; i < 3; i++) {
-            c = parseInt(hex.substr(i*2,2), 16);
-            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-            rgb += ("00"+c).substr(c.length);
-        }
-    
-        return rgb;
-    }
-
-    function darkenColor(e){
-        e.preventDefault()
-        let canvasDivs = document.querySelectorAll(".grid-border");
+function darkenColor(e){
+    e.preventDefault()
+    let canvasDivs = document.querySelectorAll(".grid-border");
         
-        canvasDivs.forEach(div=>{
-            div.addEventListener("mouseover",darkenColor);
-        })
+    canvasDivs.forEach(div=>{
+        div.addEventListener("mouseover",darkenColor);
+    })
 
-        let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
+    let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
+    
+    rgb = currentCanvasDiv.style.backgroundColor;
+    // takes the rgb values out of string into array
+    rgb = rgb.replace(/[^\d,]/g, '').split(',');
+        
+    let red = parseInt(rgb[0])
+    let green = parseInt(rgb[1])
+    let blue = parseInt(rgb[2])
+    let hex = rgbToHex(red,green,blue)
+
+        
+    currentCanvasDiv.style.backgroundColor = colorLuminance(hex,-0.1);
+ }
+
+//  lightens color on mouse click and hover
+let lightenButton = document.querySelector(".lighten")
+lightenButton.addEventListener("mousedown",lightenClickAndDrag)
+
+function lightenClickAndDrag(){
+    
+    let canvasDivs = document.querySelectorAll(".grid-border");
+    canvasDivs.forEach(div=>{
+        div.removeEventListener("mousedown",changeColor)
+        div.removeEventListener("mousedown",randomRgb)
+        div.removeEventListener("mousedown", darkenColor)
+        div.addEventListener("mousedown",lightenColor)
+    })
+    window.addEventListener('mouseup', function(e){
+        canvasDivs.forEach(div=>{
+            div.removeEventListener("mouseover",lightenColor)
+        })
+    })
+}
+
+function lightenColor(e){
+    e.preventDefault()
+
+    let canvasDivs = document.querySelectorAll(".grid-border");
+    canvasDivs.forEach(div=>{
+        div.addEventListener('mouseover',lightenColor);
+    })
+
+    let currentCanvasDiv = document.querySelector(`#${e.target.id}`);
     
         rgb = currentCanvasDiv.style.backgroundColor;
         // takes the rgb values out of string into array
@@ -174,8 +224,9 @@ function darkenClickAndDrag(){
         let hex = rgbToHex(red,green,blue)
 
         
-        currentCanvasDiv.style.backgroundColor = colorLuminance(hex,-0.1);
- }
+        currentCanvasDiv.style.backgroundColor = colorLuminance(hex,0.1);
+
+}
 
 
 // Clear button functionality
